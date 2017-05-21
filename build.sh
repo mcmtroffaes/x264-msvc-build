@@ -119,7 +119,7 @@ function make_nuget() {
 	nuget pack $fullnuspec
 }
 
-# VISUAL_STUDIO LINKAGE RUNTIME_LIBRARY CONFIGURATION PLATFORM
+# VISUAL_STUDIO LINKAGE RUNTIME_LIBRARY CONFIGURATION PLATFORM BIT_DEPTH
 function make_all() {
 	# ensure link.exe is the one from msvc
 	mv /usr/bin/link /usr/bin/link1
@@ -141,13 +141,13 @@ function make_all() {
 function appveyor_main() {
 	# bash starts in msys home folder, so first go to project folder
 	cd $(cygpath "$APPVEYOR_BUILD_FOLDER")
-	make_all "$APPVEYOR_BUILD_WORKER_IMAGE" \
-		"$LINKAGE" "$RUNTIME_LIBRARY" "$Configuration" "$Platform"
+	make_all "$APPVEYOR_BUILD_WORKER_IMAGE" "$LINKAGE" "$RUNTIME_LIBRARY" \
+		"$Configuration" "$Platform" "$BIT_DEPTH"
 }
 
 function local_main() {
-	make_all "$LICENSE" "$VISUAL_STUDIO" \
-		"$LINKAGE" "$RUNTIME_LIBRARY" "$CONFIGURATION" "$PLATFORM"
+	make_all "$LICENSE" "$VISUAL_STUDIO" "$LINKAGE" "$RUNTIME_LIBRARY" \
+		"$CONFIGURATION" "$PLATFORM" "$BIT_DEPTH"
 }
 
 set -x
