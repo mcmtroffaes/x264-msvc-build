@@ -101,7 +101,7 @@ function build_x264() {
 	make
 	make install
 	# rename import libraries
-	if [ "$3" = "shared" ]
+	if [ "$2" = "shared" ]
 	then
 		pushd "$abs1/lib/"
 		for file in *.dll.lib; do mv "$file" "${file/.dll.lib/.lib}"; done
