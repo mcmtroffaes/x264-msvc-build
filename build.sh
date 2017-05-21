@@ -68,6 +68,15 @@ x264_options () {
 	echo -n " --bit-depth=$5"
 }
 
+# BIT_DEPTH
+x264_base() {
+	echo -n "x264"
+	if [ "$1" != "8" ]
+	then
+		echo -n "-b$1"
+	fi
+}
+
 # PREFIX LINKAGE RUNTIME_LIBRARY CONFIGURATION BIT_DEPTH
 function build_x264() {
 	# find absolute path for prefix
@@ -105,8 +114,10 @@ function make_nuget() {
 	else
 		local platform="x64"
 	fi
-	local fullnuspec="x264.$2.${3^}.$4.$5.${6,,}.nuspec"
+	local fullid="$(x264_base $7).$2.${3^}.$4.$5.${6,,}"
+	local fullnuspec="$fullid.nuspec"
 	cat x264.nuspec.in \
+		| sed "s/@ID@/$fullid/g" \
 		| sed "s/@DATE@/$(get_git_date x264)/g" \
 		| sed "s/@HASH@/$(get_git_hash x264)/g" \
 		| sed "s/@PREFIX@/$1/g" \
@@ -130,7 +141,7 @@ function make_all() {
 	which cl
 	cl
 	# BASE LICENSE VISUAL_STUDIO LINKAGE RUNTIME_LIBRARY CONFIGURATION PLATFORM
-	local x264_prefix=$(target_id "x264-b$6" "GPL2" "$1" "$2" "$3" "$4" "$5")
+	local x264_prefix=$(target_id "$(x264_base $6)" "GPL2" "$1" "$2" "$3" "$4" "$5")
 	# PREFIX LINKAGE RUNTIME_LIBRARY CONFIGURATION BIT_DEPTH
 	build_x264 "$x264_prefix" "$2" "$3" "$4" "$6"
 	# FOLDER
