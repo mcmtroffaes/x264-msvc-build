@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>x264.@LICENSE@.@LINKAGE@.@RUNTIME_LIBRARY@.@CONFIGURATION@.@PLATFORM@</id>
+    <version>@DATE@.0.0</version>
+    <authors>VideoLAN</authors>
+    <owners>Matthias C. M. Troffaes</owners>
+    <projectUrl>http://www.videolan.org/developers/x264.html</projectUrl>
+    <licenseUrl>https://www.gnu.org/licenses/gpl-2.0.html</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Headers and libraries for x264.</description>
+    <releaseNotes>See https://git.videolan.org/?p=x264.git;a=log;h=@HASH@ for a full list of changes. The scripts for creating this nuget package are maintained at https://github.com/mcmtroffaes/x264-msvc-build on GitHub.</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>x264 media video encode decode encoding decoding codec native nativepackage</tags>
+  </metadata>
+  <files>
+    <file src="x264.@LINKAGE@.targets" target="build\native" />
+    <file src="@PREFIX@\share\doc\x264\**" target="build\native\share\doc\x264" />
+    <file src="@PREFIX@\include\**" target="build\native\include" />
+    <file src="@PREFIX@\bin\**" target="build\native\bin\@PLATFORM@" />
+    <file src="@PREFIX@\lib\**" target="build\native\lib\@PLATFORM@" />
+  </files>
+</package>

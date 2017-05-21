@@ -1,0 +1,24 @@
+version: 1.0.{build}
+image: Visual Studio 2015
+environment:
+  global:
+    FFMPEG_VERSION: 20170330-ad7aff0
+  matrix:
+    - LINKAGE: shared
+      RUNTIME_LIBRARY: MD
+    - LINKAGE: static
+      RUNTIME_LIBRARY: MD
+    - LINKAGE: shared
+      RUNTIME_LIBRARY: MT
+    - LINKAGE: static
+      RUNTIME_LIBRARY: MT
+platform:
+  - x86
+  - x64
+configuration: Release
+install: install.bat
+build_script: build.bat
+test: off
+artifacts:
+  - path: '*.zip'
+  - path: '*.nupkg'
