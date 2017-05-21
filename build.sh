@@ -104,6 +104,8 @@ function build_x264() {
 		for file in *.dll.lib; do mv "$file" "${file/.dll.lib/.lib}"; done
 		popd
 	fi
+	# delete pkgconfig files (not useful for msvc)
+	rm -rf "$abs1/lib/pkgconfig"
 	popd
 }
 
