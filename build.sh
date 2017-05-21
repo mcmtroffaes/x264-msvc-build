@@ -60,18 +60,35 @@ target_id () {
 	echo "$1-${date_}-${hash_}-$2-${toolset_}-$4-$5-$6-$7" | tr '[:upper:]' '[:lower:]'
 }
 
-# PREFIX RUNTIME_LIBRARY CONFIGURATION
-x264_options () {
-	echo -n " --prefix=$1"
-	echo -n " --disable-cli"
-	echo -n " --enable-static"
-	echo -n " --extra-cflags=$(cflags_runtime $2 $3)"
+# LINKAGE
+x264_options_linkage() {
+	case "$1" in
+		shared)
+			echo "--enable-shared"
+			;;
+		static)
+			echo "--enable-static"
+			;;
+		*)
+			return 1
+	esac
 }
 
-# PREFIX RUNTIME_LIBRARY CONFIGURATION
+# PREFIX LINKAGE RUNTIME_LIBRARY CONFIGURATION
+x264_options () {
+	echo -n " --prefix=$1"
+	echo -n " $(x264_options_linkage $2)"
+	echo -n " --extra-cflags=$(cflags_runtime $3 $4)"
+}
+
+# PREFIX LINKAGE RUNTIME_LIBRARY CONFIGURATION
 function build_x264() {
 	# find absolute path for prefix
 	local abs1=$(readlink -f $1)
+
+	# install license file
+	mkdir -p "$abs1/share/doc/x264"
+	cp "x264/COPYING" "$abs1/share/doc/x264/license.txt"
 
 	pushd x264
 	# we need some fixes to build x264 under msys2; see patches here:
@@ -80,7 +97,7 @@ function build_x264() {
 	curl "http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD" > config.guess
 	# 2. update configure script so we get the right compiler, compiler_style, and compiler flags
 	sed -i 's/host_os = mingw/host_os = msys/' configure
-	CC=cl ./configure $(x264_options $abs1 $2 $3) || (tail -30 config.log && exit 1)
+	CC=cl ./configure $(x264_options $abs1 $2 $3 $4) || (tail -30 config.log && exit 1)
 	make
 	make install
 	popd
@@ -119,8 +136,8 @@ function make_all() {
 	cl
 	# BASE LICENSE VISUAL_STUDIO LINKAGE RUNTIME_LIBRARY CONFIGURATION PLATFORM
 	local x264_prefix=$(target_id "x264" "GPL2" "$1" "$2" "$3" "$4" "$5")
-	# PREFIX RUNTIME_LIBRARY CONFIGURATION
-	build_x264 "$x264_prefix" "$2" "$3"
+	# PREFIX LINKAGE RUNTIME_LIBRARY CONFIGURATION
+	build_x264 "$x264_prefix" "$2" "$3" "$4"
 	# FOLDER
 	make_zip "$x264_prefix"
 	# PREFIX LICENSE LINKAGE RUNTIME_LIBRARY CONFIGURATION PLATFORM
