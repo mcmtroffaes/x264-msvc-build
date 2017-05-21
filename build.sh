@@ -60,14 +60,15 @@ target_id () {
 	echo "$1-${date_}-${hash_}-$2-${toolset_}-$4-$5-$6-$7" | tr '[:upper:]' '[:lower:]'
 }
 
-# PREFIX LINKAGE RUNTIME_LIBRARY CONFIGURATION
+# PREFIX LINKAGE RUNTIME_LIBRARY CONFIGURATION BIT_DEPTH
 x264_options () {
 	echo -n " --prefix=$1"
 	echo -n " --enable-$2"
 	echo -n " --extra-cflags=$(cflags_runtime $3 $4)"
+	echo -n " --bit-depth=$5"
 }
 
-# PREFIX LINKAGE RUNTIME_LIBRARY CONFIGURATION
+# PREFIX LINKAGE RUNTIME_LIBRARY CONFIGURATION BIT_DEPTH
 function build_x264() {
 	# find absolute path for prefix
 	local abs1=$(readlink -f $1)
@@ -83,7 +84,7 @@ function build_x264() {
 	curl "http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD" > config.guess
 	# 2. update configure script so we get the right compiler, compiler_style, and compiler flags
 	sed -i 's/host_os = mingw/host_os = msys/' configure
-	CC=cl ./configure $(x264_options $abs1 $2 $3 $4) || (tail -30 config.log && exit 1)
+	CC=cl ./configure $(x264_options $abs1 $2 $3 $4 $5) || (tail -30 config.log && exit 1)
 	make
 	make install
 	# rename import libraries
@@ -96,7 +97,7 @@ function build_x264() {
 	popd
 }
 
-# PREFIX LICENSE LINKAGE RUNTIME_LIBRARY CONFIGURATION PLATFORM
+# PREFIX LICENSE LINKAGE RUNTIME_LIBRARY CONFIGURATION PLATFORM BIT_DEPTH
 function make_nuget() {
 	if [ "${6,,}" = "x86" ]
 	then
@@ -114,6 +115,7 @@ function make_nuget() {
 		| sed "s/@RUNTIME_LIBRARY@/$4/g" \
 		| sed "s/@CONFIGURATION@/$5/g" \
 		| sed "s/@PLATFORM@/$platform/g" \
+		| sed "s/@BIT_DEPTH@/$7/g" \
 		> $fullnuspec
 	cat $fullnuspec  # for debugging
 	nuget pack $fullnuspec
@@ -128,13 +130,13 @@ function make_all() {
 	which cl
 	cl
 	# BASE LICENSE VISUAL_STUDIO LINKAGE RUNTIME_LIBRARY CONFIGURATION PLATFORM
-	local x264_prefix=$(target_id "x264" "GPL2" "$1" "$2" "$3" "$4" "$5")
-	# PREFIX LINKAGE RUNTIME_LIBRARY CONFIGURATION
-	build_x264 "$x264_prefix" "$2" "$3" "$4"
+	local x264_prefix=$(target_id "x264-b$6" "GPL2" "$1" "$2" "$3" "$4" "$5")
+	# PREFIX LINKAGE RUNTIME_LIBRARY CONFIGURATION BIT_DEPTH
+	build_x264 "$x264_prefix" "$2" "$3" "$4" "$6"
 	# FOLDER
 	make_zip "$x264_prefix"
-	# PREFIX LICENSE LINKAGE RUNTIME_LIBRARY CONFIGURATION PLATFORM
-	make_nuget "$x264_prefix" "GPL2" "$2" "$3" "$4" "$5"
+	# PREFIX LICENSE LINKAGE RUNTIME_LIBRARY CONFIGURATION PLATFORM BIT_DEPTH
+	make_nuget "$x264_prefix" "GPL2" "$2" "$3" "$4" "$5" "$6"
 	mv /usr/bin/link1 /usr/bin/link
 }
 

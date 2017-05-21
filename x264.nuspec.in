@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
-    <id>x264.@LICENSE@.@LINKAGE@.@RUNTIME_LIBRARY@.@CONFIGURATION@.@PLATFORM@</id>
+    <id>x264.b@BIT_DEPTH@.@LICENSE@.@LINKAGE@.@RUNTIME_LIBRARY@.@CONFIGURATION@.@PLATFORM@</id>
     <version>@DATE@.0.0</version>
     <authors>VideoLAN</authors>
     <owners>Matthias C. M. Troffaes</owners>
