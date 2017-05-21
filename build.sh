@@ -3,6 +3,7 @@ set -e
 
 # FOLDER
 function make_zip() {
+	find "$1"  # prints paths of all files to be zipped
 	7z a -tzip -r "$1.zip" $1
 }
 
@@ -83,8 +84,8 @@ function build_x264() {
 	local abs1=$(readlink -f $1)
 
 	# install license file
-	mkdir -p "$abs1/share/doc/x264"
-	cp "x264/COPYING" "$abs1/share/doc/x264/license.txt"
+	mkdir -p "$abs1/licenses"
+	cp "x264/COPYING" "$abs1/licenses/x264.txt"
 
 	pushd x264
 	# we need some fixes to build x264 under msys2; see patches here:

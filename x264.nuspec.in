@@ -15,7 +15,7 @@
   </metadata>
   <files>
     <file src="x264.@LINKAGE@.targets" target="build\native" />
-    <file src="@PREFIX@\share\doc\x264\**" target="build\native\share\doc\x264" />
+    <file src="@PREFIX@\licenses\**" target="build\native\licenses" />
     <file src="@PREFIX@\include\**" target="build\native\include" />
     <file src="@PREFIX@\bin\**" target="build\native\bin\@PLATFORM@" />
     <file src="@PREFIX@\lib\**" target="build\native\lib\@PLATFORM@" />
