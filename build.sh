@@ -21,7 +21,7 @@ get_git_hash() {
 }
 
 # VISUAL_STUDIO
-toolset () {
+get_toolset () {
 	case "$1" in
 		Visual\ Studio\ 2013)
 			echo -n "v120"
@@ -54,30 +54,16 @@ cflags_runtime() {
 
 # BASE LICENSE VISUAL_STUDIO LINKAGE RUNTIME_LIBRARY CONFIGURATION PLATFORM
 target_id () {
-	local toolset_=$(toolset "$3")
+	local toolset_=$(get_toolset "$3")
 	local date_=$(get_git_date "$1")
 	local hash_=$(get_git_hash "$1")
 	echo "$1-${date_}-${hash_}-$2-${toolset_}-$4-$5-$6-$7" | tr '[:upper:]' '[:lower:]'
 }
 
-# LINKAGE
-x264_options_linkage() {
-	case "$1" in
-		shared)
-			echo "--enable-shared"
-			;;
-		static)
-			echo "--enable-static"
-			;;
-		*)
-			return 1
-	esac
-}
-
 # PREFIX LINKAGE RUNTIME_LIBRARY CONFIGURATION
 x264_options () {
 	echo -n " --prefix=$1"
-	echo -n " $(x264_options_linkage $2)"
+	echo -n " --enable-$2"
 	echo -n " --extra-cflags=$(cflags_runtime $3 $4)"
 }
 
