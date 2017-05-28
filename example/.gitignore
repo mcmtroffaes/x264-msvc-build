@@ -1,5 +1,6 @@
 .vs/
 Debug/
+packages/
 *.VC.VC.opendb
 *.VC.db
 *.sdf
