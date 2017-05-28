@@ -39,13 +39,12 @@ artifacts:
   - path: '*.zip'
   - path: '*.nupkg'
 deploy:
-  description: 'Header, library, and executable for x264.'
   provider: GitHub
+  description: 'Header, library, and executable for x264.'
   auth_token:
     secure: QSdxjkooPHApqh95gD9duaZBxmv/5zWzDcukjNQGmbedwEu0BvzgA6HUEXpvni25
   artifact: /.*\.zip/
   draft: false
   prerelease: false
   on:
-    branch: master
     appveyor_repo_tag: true
