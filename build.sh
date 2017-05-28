@@ -7,18 +7,12 @@ function make_zip() {
 	7z a -tzip -r "$1.zip" $1
 }
 
-# FOLDER
 get_git_date() {
-	pushd "$1" > /dev/null
 	git show -s --format=%ci HEAD | sed 's/\([0-9]\{4\}\)-\([0-9][0-9]\)-\([0-9][0-9]\).*/\1\2\3/'
-	popd > /dev/null
 }
 
-# FOLDER
 get_git_hash() {
-	pushd "$1" > /dev/null
 	git show -s --format=%h HEAD
-	popd > /dev/null
 }
 
 # VISUAL_STUDIO
@@ -56,8 +50,8 @@ cflags_runtime() {
 # BASE LICENSE VISUAL_STUDIO LINKAGE RUNTIME_LIBRARY CONFIGURATION PLATFORM
 target_id () {
 	local toolset_=$(get_toolset "$3")
-	local date_=$(get_git_date "$1")
-	local hash_=$(get_git_hash "$1")
+	local date_=$(get_git_date)
+	local hash_=$(get_git_hash)
 	echo "$1-${date_}-${hash_}-$2-${toolset_}-$4-$5-$6-$7" | tr '[:upper:]' '[:lower:]'
 }
 
@@ -143,8 +137,10 @@ function make_all() {
 	# ensure cl.exe can be called
 	which cl
 	cl
+	pushd x264
 	# BASE LICENSE VISUAL_STUDIO LINKAGE RUNTIME_LIBRARY CONFIGURATION PLATFORM
 	local x264_prefix=$(target_id "$(x264_base $6)" "GPL2" "$1" "$2" "$3" "$4" "$5")
+	popd
 	# PREFIX LINKAGE RUNTIME_LIBRARY CONFIGURATION BIT_DEPTH
 	build_x264 "$x264_prefix" "$2" "$3" "$4" "$6"
 	# FOLDER
