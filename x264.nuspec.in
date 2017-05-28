@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>@ID@</id>
-    <version>@DATE@.0.0</version>
+    <version>@DATE@.0.1</version>
     <authors>VideoLAN</authors>
     <owners>Matthias C. M. Troffaes</owners>
     <projectUrl>http://www.videolan.org/developers/x264.html</projectUrl>
