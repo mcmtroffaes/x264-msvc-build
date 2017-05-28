@@ -14,7 +14,7 @@
     <tags>x264 media video encode decode encoding decoding codec native nativepackage</tags>
   </metadata>
   <files>
-    <file src="x264.@LINKAGE@.targets" target="build\native" />
+    <file src="x264-@LINKAGE@.targets" target="build\native" />
     <file src="@PREFIX@\licenses\**" target="build\native\licenses" />
     <file src="@PREFIX@\include\**" target="build\native\include" />
     <file src="@PREFIX@\bin\**" target="build\native\bin\@PLATFORM@" />
