@@ -94,6 +94,12 @@ function build_x264() {
 	local runtime
 	local configuration
 	local "${@}"
+
+	# install license file
+	mkdir -p "$prefix/share/doc/x264"
+	cp "x264/COPYING" "$prefix/share/doc/x264/license.txt"
+
+	# run configure, make, make install
 	pushd x264
 	# use latest config.guess to ensure that we can detect msys2
 	curl "http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD" > config.guess
