@@ -50,9 +50,9 @@ target_id() {
 	local configuration
 	local platform
 	local "${@}"
-	local date_=$(get_git_date folder="$base")
-	local hash_=$(get_git_hash folder="$base")
-	echo "${base}-${date_}-${hash_}-${extra}-${visual_studio}-${linkage}-${runtime}-${configuration}-${platform}" | tr '[:upper:]' '[:lower:]'
+	echo -n "$base-$(get_git_date folder=$base)-$(get_git_hash folder=$base)" | tr '[:upper:]' '[:lower:]'
+	[[ !  -z  $extra  ]] && echo -n "-${extra}" | tr '[:upper:]' '[:lower:]'
+	echo -n "-$visual_studio-$linkage-$runtime-$configuration-$platform" | tr '[:upper:]' '[:lower:]'
 }
 
 x264_options_linkage() {
