@@ -1,6 +1,9 @@
 # exit immediately upon error
 set -e
 
+MINOR=0
+PATCH=0
+
 function make_zip() {
 	local folder
 	local "${@}"
@@ -22,6 +25,12 @@ get_git_hash() {
 	pushd "$folder" > /dev/null
 	git show -s --format=%h HEAD
 	popd > /dev/null
+}
+
+get_version() {
+	local folder
+	local "${@}"
+	echo -n "$(get_git_date folder=$folder).$MINOR.$PATCH-$(get_git_hash folder=$folder)"
 }
 
 cflags_runtime() {
@@ -50,7 +59,7 @@ target_id() {
 	local configuration
 	local platform
 	local "${@}"
-	echo -n "$base-$(get_git_date folder=$base)-$(get_git_hash folder=$base)" | tr '[:upper:]' '[:lower:]'
+	echo -n "$base-$(get_version folder=$base)" | tr '[:upper:]' '[:lower:]'
 	[[ !  -z  $extra  ]] && echo -n "-${extra}" | tr '[:upper:]' '[:lower:]'
 	echo -n "-$visual_studio-$linkage-$runtime-$configuration-$platform" | tr '[:upper:]' '[:lower:]'
 }
