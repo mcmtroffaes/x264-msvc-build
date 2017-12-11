@@ -37,7 +37,6 @@ build_script: build.bat
 test: off
 artifacts:
   - path: '*.zip'
-  - path: '*.nupkg'
 deploy:
   provider: GitHub
   description: 'Header, library, and executable for x264.'
