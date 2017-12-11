@@ -118,7 +118,7 @@ function make_all() {
 	# ensure cl.exe can be called
 	which cl
 	cl
-	local x264_folder=$(target_id base=x264 extra="GPL2" visual_studio="$visual_studio" linkage="static" runtime="$runtime" configuration="$configuration" platform="$platform")
+	local x264_folder=$(target_id base=x264 extra=GPL2 visual_studio=$visual_studio linkage=$linkage runtime=$runtime configuration=$configuration platform=$platform)
 	local x264_prefix=$(readlink -f $x264_folder)
 	build_x264 prefix=$x264_prefix runtime=$runtime configuration=$configuration
 	make_zip folder=$x264_folder
