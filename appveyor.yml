@@ -6,28 +6,12 @@ environment:
   matrix:
     - LINKAGE: shared
       RUNTIME_LIBRARY: MD
-      BIT_DEPTH: 8
     - LINKAGE: static
       RUNTIME_LIBRARY: MD
-      BIT_DEPTH: 8
     - LINKAGE: shared
       RUNTIME_LIBRARY: MT
-      BIT_DEPTH: 8
     - LINKAGE: static
       RUNTIME_LIBRARY: MT
-      BIT_DEPTH: 8
-    - LINKAGE: shared
-      RUNTIME_LIBRARY: MD
-      BIT_DEPTH: 10
-    - LINKAGE: static
-      RUNTIME_LIBRARY: MD
-      BIT_DEPTH: 10
-    - LINKAGE: shared
-      RUNTIME_LIBRARY: MT
-      BIT_DEPTH: 10
-    - LINKAGE: static
-      RUNTIME_LIBRARY: MT
-      BIT_DEPTH: 10
 platform:
   - x86
   - x64
