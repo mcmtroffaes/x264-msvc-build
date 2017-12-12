@@ -69,10 +69,10 @@ x264_options_linkage() {
 	local "${@}"
 	case "$linkage" in
 		shared)
-			echo " --enable-shared"
+			echo "--enable-shared"
 			;;
 		static)
-			echo " --enable-static"
+			echo "--enable-static"
 			;;
 		*)
 			return 1
