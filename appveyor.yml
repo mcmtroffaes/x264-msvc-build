@@ -26,6 +26,8 @@ environment:
     - LINKAGE: static
       RUNTIME_LIBRARY: MT
       TOOLSET: v140
+matrix:
+  fast_finish: true
 platform:
   - x86
   - x64
@@ -36,8 +38,8 @@ test: off
 artifacts:
   - path: '*.zip'
 deploy:
-  provider: GitHub
   description: 'Header, library, and executable for x264.'
+  provider: GitHub
   auth_token:
     secure: QSdxjkooPHApqh95gD9duaZBxmv/5zWzDcukjNQGmbedwEu0BvzgA6HUEXpvni25
   artifact: /.*\.zip/
