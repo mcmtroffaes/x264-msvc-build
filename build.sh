@@ -2,7 +2,7 @@
 set -e
 
 MINOR=0
-PATCH=2
+PATCH=3
 
 function make_zip() {
 	local folder
