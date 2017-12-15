@@ -107,7 +107,7 @@ function build_x264() {
 	curl "http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD" > config.guess
 	# hotpatch configure script so we get the right compiler, compiler_style, and compiler flags
 	sed -i 's/host_os = mingw/host_os = msys/' configure
-	CC=cl ./configure $(x264_options prefix=$prefix runtime=$runtime configuration=$configuration) || (tail -30 config.log && exit 1)
+	CC=cl ./configure $(x264_options prefix=$prefix linkage=$linkage runtime=$runtime configuration=$configuration) || (tail -30 config.log && exit 1)
 	make
 	make install
 	# rename import libraries
