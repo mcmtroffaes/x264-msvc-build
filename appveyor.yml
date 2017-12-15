@@ -1,31 +1,56 @@
 version: 1.0.{build}
-image: Visual Studio 2015
 environment:
   matrix:
     - LINKAGE: shared
       RUNTIME_LIBRARY: MD
       TOOLSET: v120
-    - LINKAGE: shared
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    - LINKAGE: static
       RUNTIME_LIBRARY: MD
-      TOOLSET: v110
+      TOOLSET: v120
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
     - LINKAGE: shared
-      RUNTIME_LIBRARY: MD
-      TOOLSET: v100
-    - LINKAGE: shared
-      RUNTIME_LIBRARY: MD
-      TOOLSET: v90
+      RUNTIME_LIBRARY: MT
+      TOOLSET: v120
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    - LINKAGE: static
+      RUNTIME_LIBRARY: MT
+      TOOLSET: v120
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+
     - LINKAGE: shared
       RUNTIME_LIBRARY: MD
       TOOLSET: v140
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
     - LINKAGE: static
       RUNTIME_LIBRARY: MD
       TOOLSET: v140
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
     - LINKAGE: shared
       RUNTIME_LIBRARY: MT
       TOOLSET: v140
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
     - LINKAGE: static
       RUNTIME_LIBRARY: MT
       TOOLSET: v140
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+
+    - LINKAGE: shared
+      RUNTIME_LIBRARY: MD
+      TOOLSET: v141
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - LINKAGE: static
+      RUNTIME_LIBRARY: MD
+      TOOLSET: v141
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - LINKAGE: shared
+      RUNTIME_LIBRARY: MT
+      TOOLSET: v141
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - LINKAGE: static
+      RUNTIME_LIBRARY: MT
+      TOOLSET: v141
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
 matrix:
   fast_finish: true
 platform:
