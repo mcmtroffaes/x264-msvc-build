@@ -37,12 +37,12 @@ cflags_runtime() {
 	local runtime
 	local configuration
 	local "${@}"
-	echo -n "-$runtime" | tr '[:lower:]' '[:upper:]'
+	echo -n "-${runtime^^}"
 	case "$configuration" in
-		Release)
+		release)
 			echo ""
 			;;
-		Debug)
+		debug)
 			echo "d"
 			;;
 		*)
@@ -59,9 +59,9 @@ target_id() {
 	local configuration
 	local platform
 	local "${@}"
-	echo -n "$base-$(get_version folder=$base)" | tr '[:upper:]' '[:lower:]'
-	[[ !  -z  $extra  ]] && echo -n "-${extra}" | tr '[:upper:]' '[:lower:]'
-	echo -n "-$visual_studio-$linkage-$runtime-$configuration-$platform" | tr '[:upper:]' '[:lower:]'
+	echo -n "$base-$(get_version folder=$base)"
+	[[ !  -z  $extra  ]] && echo -n "-${extra}"
+	echo -n "-$visual_studio-$linkage-$runtime-$configuration-$platform"
 }
 
 x264_options_linkage() {
@@ -81,6 +81,7 @@ x264_options_linkage() {
 
 x264_options() {
 	local prefix
+	local linkage
 	local runtime
 	local configuration
 	local "${@}"
@@ -91,6 +92,7 @@ x264_options() {
 
 function build_x264() {
 	local prefix
+	local linkage
 	local runtime
 	local configuration
 	local "${@}"
@@ -135,33 +137,17 @@ function make_all() {
 	cl
 	local x264_folder=$(target_id base=x264 visual_studio=$visual_studio linkage=$linkage runtime=$runtime configuration=$configuration platform=$platform)
 	local x264_prefix=$(readlink -f $x264_folder)
-	build_x264 prefix=$x264_prefix runtime=$runtime configuration=$configuration
+	build_x264 prefix=$x264_prefix linkage=$linkage runtime=$runtime configuration=$configuration
 	make_zip folder=$x264_folder
 	mv /usr/bin/link1 /usr/bin/link
-}
-
-get_appveyor_visual_studio() {
-	case "$APPVEYOR_BUILD_WORKER_IMAGE" in
-		Visual\ Studio\ 2013)
-			echo -n "v120"
-			;;
-		Visual\ Studio\ 2015)
-			echo -n "v140"
-			;;
-		Visual\ Studio\ 2017)
-			echo -n "v141"
-			;;
-		*)
-			return 1
-	esac
 }
 
 set -xe
 # bash starts in msys home folder, so first go to project folder
 cd $(cygpath "$APPVEYOR_BUILD_FOLDER")
 make_all \
-	visual_studio=$(get_appveyor_visual_studio) \
-	linkage="$LINKAGE" \
-	runtime="$RUNTIME_LIBRARY" \
-	configuration="$Configuration" \
-	platform="$Platform"
+	visual_studio=${TOOLSET,,} \
+	linkage=${LINKAGE,,} \
+	runtime=${RUNTIME_LIBRARY,,} \
+	configuration=${Configuration,,} \
+	platform=${Platform,,}

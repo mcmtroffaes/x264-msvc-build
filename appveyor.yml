@@ -1,15 +1,31 @@
 version: 1.0.{build}
-image: Visual Studio 2015
+image: Visual Studio 2017
 environment:
   matrix:
     - LINKAGE: shared
       RUNTIME_LIBRARY: MD
+      TOOLSET: v141
     - LINKAGE: static
       RUNTIME_LIBRARY: MD
+      TOOLSET: v141
     - LINKAGE: shared
       RUNTIME_LIBRARY: MT
+      TOOLSET: v141
     - LINKAGE: static
       RUNTIME_LIBRARY: MT
+      TOOLSET: v141
+    - LINKAGE: shared
+      RUNTIME_LIBRARY: MD
+      TOOLSET: v140
+    - LINKAGE: static
+      RUNTIME_LIBRARY: MD
+      TOOLSET: v140
+    - LINKAGE: shared
+      RUNTIME_LIBRARY: MT
+      TOOLSET: v140
+    - LINKAGE: static
+      RUNTIME_LIBRARY: MT
+      TOOLSET: v140
 platform:
   - x86
   - x64
