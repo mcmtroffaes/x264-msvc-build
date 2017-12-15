@@ -4,6 +4,18 @@ environment:
   matrix:
     - LINKAGE: shared
       RUNTIME_LIBRARY: MD
+      TOOLSET: v120
+    - LINKAGE: shared
+      RUNTIME_LIBRARY: MD
+      TOOLSET: v110
+    - LINKAGE: shared
+      RUNTIME_LIBRARY: MD
+      TOOLSET: v100
+    - LINKAGE: shared
+      RUNTIME_LIBRARY: MD
+      TOOLSET: v90
+    - LINKAGE: shared
+      RUNTIME_LIBRARY: MD
       TOOLSET: v141
     - LINKAGE: static
       RUNTIME_LIBRARY: MD
@@ -26,8 +38,6 @@ environment:
     - LINKAGE: static
       RUNTIME_LIBRARY: MT
       TOOLSET: v140
-matrix:
-  fast_finish: true
 platform:
   - x86
   - x64
